@@ -21,12 +21,14 @@ struct ThreeDotsLoaderView: View {
     @State private var scaleEffect2 = 1.0
     @State private var scaleEffect3 = 1.0
     
+    @State private var timer: Timer?
+    
     var body: some View {
         HStack(spacing: 10) {
             VStack {
             }
             .frame(width: 20, height: 20)
-            .background(Color.red)
+            .background(Color.purple)
             .clipShape(Circle())
             .offset(x: self.offsetX1)
             .scaleEffect(self.scaleEffect1)
@@ -35,7 +37,7 @@ struct ThreeDotsLoaderView: View {
             VStack {
             }
             .frame(width: 20, height: 20)
-            .background(Color.blue)
+            .background(Color.yellow)
             .clipShape(Circle())
             .offset(x: self.offsetX2)
             .scaleEffect(self.scaleEffect2)
@@ -44,17 +46,18 @@ struct ThreeDotsLoaderView: View {
             VStack {
             }
             .frame(width: 20, height: 20)
-            .background(Color.green)
+            .background(Color.blue)
             .clipShape(Circle())
             .offset(x: self.offsetX3)
             .scaleEffect(self.scaleEffect3)
             .animation(.smooth(duration: 0.5), value: isAnimating)
             
             Button("Animate") {
-                Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+                timer?.invalidate()
+                timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
                     self.index += 1
                     if self.index % 3 == 0 {
-                        self.offsetX3 = -40
+                        self.offsetX3 = -80
                         self.offsetX2 += 30
                         self.offsetX1 += 30
                         self.scaleEffect3 = 1.5
@@ -65,7 +68,7 @@ struct ThreeDotsLoaderView: View {
                             self.offsetX3 = -60
                         }
                     } else if self.index % 3 == 1 {
-                        self.offsetX2 = -10
+                        self.offsetX2 = -50
                         self.offsetX1 += 30
                         self.offsetX3 += 30
                         self.scaleEffect2 = 1.5
@@ -76,7 +79,7 @@ struct ThreeDotsLoaderView: View {
                             self.offsetX2 = -30
                         }
                     } else {
-                        self.offsetX1 = 10
+                        self.offsetX1 = -30
                         self.offsetX3 += 30
                         self.offsetX2 += 30
                         self.scaleEffect1 = 1.5
